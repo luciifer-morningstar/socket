@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Tahoma, Geneva, sans-serif;
+        }
+
+        div {
+            display: inline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Subscriber</h1>
+    <input type="text" id="channel" placeholder="Channel (weather, sports etc.)"/>
+    <button onclick="subscribe()">Subscribe</button>
+    <hr />
+    <div id="subscribedChannel"></div>
+    <hr />
+
+    <script>
+        let chartLabels = [];
+        let chartData = [];
+        var socket = io('http://127.0.0.1:4000/hoicko');
+        function subscribe(){
+        let data = document.getElementById("channel").value;
+            socket.emit('test', data);
+            socket.on('socket_from_server', function(msg) {
+                document.getElementById(`subscribedChannel`).innerHTML = JSON.stringify(msg);
+            });
+        }
+    </script>
+</body>
+
+</html>
